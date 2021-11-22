@@ -16,7 +16,7 @@ const isLoggedIn = require('../middleware/isLoggedIn')
 const Editor = require('../models/Editor')
 
 
-router.get("/signup", (req, res, next) => {
+router.get("/signup", isLoggedOut, (req, res, next) => {
   res.render('signUp');
 });
 
@@ -84,11 +84,11 @@ router.post('/signup', (req, res, next) => {
 
 
 
-router.get('/login', (req, res, next) => {
+router.get('/login', isLoggedOut, (req, res, next) => {
   res.render('logIn')
 })
 
-router.post('/logIn', isLoggedOut, (req, res, next) => {
+router.post('/logIn', (req, res, next) => {
   const { username, password } = req.body
 
   if (!username) {
