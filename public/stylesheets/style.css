@@ -388,7 +388,19 @@ input {
 /* Showroom Page */
 
 /* Create Blog Post Page */
+.create {
+  width: 50%;
+  border-style: none;
+  margin: 50px auto;
+}
 
+.editor-control {
+  margin-top: 50px;
+}
+
+.ck-editor__editable {
+  min-height: 400px;
+}
 /* Edit Blog Post Page */
 
 /* Media Queries */
