@@ -2,7 +2,7 @@
   <div>
     <h1>Blogify</h1>
   </div>
-  <form class='login-form'>
+  <form action='/login' method='POST' class='login-form'>
     <h3>Welcome Back</h3>
 
     <label for='name'>Enter your name</label>
@@ -26,3 +26,12 @@
     </div>
   </form>
 </div>
+{{#if errorMessage}}
+  <div class='alert'>
+    <span
+      class='closebtn'
+      onclick="this.parentElement.style.display='none';"
+    >&times;</span>
+    {{errorMessage}}
+  </div>
+{{/if}}
