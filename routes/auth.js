@@ -105,7 +105,7 @@ router.post('/login', isLoggedOut, (req, res, next) => {
   }
 
   // Search the database for a user with the username submitted in the form
-  User.findOne({ username })
+  Editor.findOne({ username })
     .then((user) => {
       // If the user isn't found, send the message that user provided wrong credentials
       if (!user) {
@@ -115,8 +115,9 @@ router.post('/login', isLoggedOut, (req, res, next) => {
       }
 
       // If user is found based on the username, check if the in putted password matches the one saved in the database
-      bcrypt.compare(password, user.password).then((isSamePassword) => {
-        if (!isSamePassword) {
+      // bcrypt.compare(password, user.password).then((isSamePassword) => {
+        // if (!isSamePassword) {
+          if (!(bcrypt.compare(password, user.password))){
           return res
             .status(400)
             .render('logIn', { errorMessage: 'Wrong credentials.' })
@@ -124,12 +125,14 @@ router.post('/login', isLoggedOut, (req, res, next) => {
         req.session.user = user
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
         return res.redirect('/profile')
+                .catch((err) => {
+                  next(err)
+                 })
       })
+
     })
 
-    .catch((err) => {
-      next(err)
-    })
-})
+    
+
 
 module.exports = router
