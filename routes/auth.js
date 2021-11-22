@@ -13,6 +13,76 @@ const User = require('../models/User.model')
 // Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require('../middleware/isLoggedOut')
 const isLoggedIn = require('../middleware/isLoggedIn')
+const Editor = require('../models/Editor')
+
+
+router.get("/signup", (req, res, next) => {
+  res.render('signup');
+});
+
+router.post('/signup', (req, res, next) => {
+  const { username, password, bio, email } = req.body
+  if (password.length < 8) {
+    res.render('signup', { errorMessage: 'Your password needs to be at least 8 characters long.' })
+    return
+  }
+  if (username.length === 0) {
+    res.render('signup', { errorMessage: 'Your username cannot be empty.' })
+    return
+  }
+  Editor.findOne({ username: username })
+    .then(editorFromDB => {
+      if (editorFromDB !== null) {
+        res.render('signup', ({ errorMessage: 'Your username is already taken' }))
+      } else {
+        const salt = bcrypt.genSaltSync()
+        const hash = bcrypt.hashSync(password, salt)
+        Editor.create({ username, hash, bio, email })
+          .then(editorFromDB => {
+            res.send(req.body)
+     //       res.redirect('profile')
+          })
+          .catch(err => next(err))
+      }
+    })
+})
+
+
+
+// router.post('/signup', (req, res, next) => {
+// 	const { username, password } = req.body
+// 	if (password.length < 8) {
+// 		res.render('signup', { errorMessage: 'Your password needs to be 8 chars min' })
+// 		return
+// 	}
+
+// 	if (username.length === 0) {
+// 		res.render('signup', { errorMessage: 'Your username cannot be empty' })
+// 		return
+// 	}
+
+// 	Editor.findOne({ username: username })
+// 		.then(editorFromDB => {
+// 			if (editorFromDB !== null) {
+// 				res.render('signup', { errorMessage: 'Your username is already taken' })
+// 			} else {
+
+// 				const salt = bcrypt.genSaltSync();
+// 				const hash = bcrypt.hashSync(password, salt)
+
+// 				Editor.create({ username: username, password: hash })
+// 					.then(createdEditor => {
+// 						res.redirect('/profile')
+// 					})
+// 					.catch(err => next(err))
+// 			}
+// 		})
+// });
+
+
+
+
+
 
 router.get('/login', (req, res, next) => {
   res.render('logIn')
