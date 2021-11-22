@@ -1,12 +1,10 @@
 const {Schema, model} = require('mongoose');
 
 const editorSchema = new Schema ({
-    firstName: String,
-    lastName: String,
-    dob: Date,
     email: String,
     username: String,
-    password:String
+    password:String,
+    bio: String    
 },{
     timestamps: true
 });
