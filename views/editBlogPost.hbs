@@ -8,14 +8,20 @@
 </nav>
 
 <form class='create' action='/' method='post'>
-  <input type='text' id='title' name='title' placeholder='Enter a title here' />
+  <input
+    type='text'
+    id='title'
+    name='title'
+    placeholder='Enter a title here'
+    value='{{name}}'
+  />
   <div id='toolbar-container'></div>
 
   <div class='editor-control'>
-    <div id='editor' name='name'></div>
+    <div id='editor'></div>
   </div>
 
-  <button class='btn-form-small'>Create Post</button>
+  <button class='btn-form-small'>Edit Post</button>
 </form>
 
 <footer id='main-footer' class='text-center p-4'>

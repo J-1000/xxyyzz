@@ -9,4 +9,8 @@ router.get('/create', (req, res, next) => {
   res.render('createBlogPost')
 })
 
+router.get('/edit', (req, res, next) => {
+  res.render('editBlogPost')
+})
+
 module.exports = router
