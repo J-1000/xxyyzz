@@ -17,29 +17,30 @@ const Editor = require('../models/Editor')
 
 
 router.get("/signup", (req, res, next) => {
-  res.render('signup');
+  res.render('signUp');
 });
 
 router.post('/signup', (req, res, next) => {
   const { username, password, bio, email } = req.body
   if (password.length < 8) {
-    res.render('signup', { errorMessage: 'Your password needs to be at least 8 characters long.' })
+    res.render('signUp', { errorMessage: 'Your password needs to be at least 8 characters long.' })
     return
   }
   if (username.length === 0) {
-    res.render('signup', { errorMessage: 'Your username cannot be empty.' })
+    res.render('signUp', { errorMessage: 'Your username cannot be empty.' })
     return
   }
   Editor.findOne({ username: username })
     .then(editorFromDB => {
       if (editorFromDB !== null) {
-        res.render('signup', ({ errorMessage: 'Your username is already taken' }))
+        res.render('signUp', ({ errorMessage: 'Your username is already taken' }))
       } else {
         const salt = bcrypt.genSaltSync()
         const hash = bcrypt.hashSync(password, salt)
-        Editor.create({ username, hash, bio, email })
+        Editor.create({ username:username, password:hash, bio:bio, email:email })
           .then(editorFromDB => {
-            res.send(req.body)
+            console.log(bio, email)
+            res.send(editorFromDB)
      //       res.redirect('profile')
           })
           .catch(err => next(err))
