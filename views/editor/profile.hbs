@@ -2,7 +2,7 @@
   <div class='nav-container'>
     <h1>Blogify</h1>
     <ul>
-      <li><a href='#' class='btn-logout'>Log Out</a></li>
+      <li><a href='/logout' class='btn-logout'>Log Out</a></li>
     </ul>
   </div>
 </nav>
@@ -14,18 +14,17 @@
         <img src='https://source.unsplash.com/random/800x600' alt='#' />
       </div>
       <figcaption>
-        <h3>Matroschka</h3>
+
+        <h3>{{username}}</h3>
         <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique
-          quos atque culpa id tempora necessitatibus. Nemo iure voluptates
-          recusandae fugiat.
+          {{bio}}
         </p>
       </figcaption>
     </figure>
   </div>
 
   <div>
-    <h1>Welcome Matroschka</h1>
+    <h1>Welcome {{username}}</h1>
     <h3>What do you want to do today?</h3>
     <a class='btn-red' href=''><span>Create Blog Post</span></a>
     <a class='btn-red' href=''><span>View Blog Posts</span></a>
@@ -37,5 +36,3 @@
     <p>&copy; <span id='year'></span> Blogify</p>
   </div>
 </footer>
-
-{{!-- comment --}}
