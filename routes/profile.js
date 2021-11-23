@@ -47,6 +47,7 @@ router.post('/profile/edit',(req, res, next) => {
 
     if (email.length === 0 || bio.length === 0) { 
         res.render('editor/edit-profile', {...req.session.user,errorMessage: 'Bio and Email cannot be empty'});
+        return
     }
     
     Editor.findByIdAndUpdate(id, {
