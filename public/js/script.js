@@ -67,3 +67,8 @@ function init() {
 
 // Get the current year for the copyright
 $('#year').text(new Date().getFullYear())
+
+// Create the Editor
+ClassicEditor.create(document.querySelector('#editor')).catch((error) => {
+  console.log(error)
+})
