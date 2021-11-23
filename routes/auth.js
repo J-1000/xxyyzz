@@ -15,12 +15,12 @@ const isLoggedOut = require('../middleware/isLoggedOut')
 const isLoggedIn = require('../middleware/isLoggedIn')
 const Editor = require('../models/Editor')
 
-// Signup routes
-router.get('/signup', isLoggedOut, (req, res, next) => {
-  res.render('signUp')
-})
+const fileUploader = require('../config/cloudinary');
+router.get("/signup", isLoggedOut, (req, res, next) => {
+  res.render('signUp');
+});
 
-router.post('/signup', (req, res, next) => {
+router.post('/signup', fileUploader.single('profile-image'),(req, res, next) => {
   const { username, password, bio, email } = req.body
   if (password.length < 8) {
     res.render('signUp', {
@@ -32,6 +32,7 @@ router.post('/signup', (req, res, next) => {
     res.render('signUp', { errorMessage: 'Your username cannot be empty.' })
     return
   }
+
   Editor.findOne({ username: username }).then((editorFromDB) => {
     if (editorFromDB !== null) {
       res.render('signUp', { errorMessage: 'Your username is already taken' })
@@ -43,6 +44,7 @@ router.post('/signup', (req, res, next) => {
         password: hash,
         bio: bio,
         email: email,
+        imageUrl: req.file.path
       })
         .then((editorFromDB) => {
           req.session.user = editorFromDB

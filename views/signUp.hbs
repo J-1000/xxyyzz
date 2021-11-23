@@ -3,7 +3,7 @@
     <h1>Blogify</h1>
   </div>
 
-  <form action='/signup' method='POST'>
+  <form action='/signup' method='POST' enctype="multipart/form-data">
     <h3>Signup Here</h3>
 
     <label for='username'>Enter your name</label>
@@ -17,6 +17,12 @@
 
     <label for='password'>Pick a password</label>
     <input type='password' id='password' name='password' />
+
+    <label for="image">
+      Choose your profile photo
+      <input type="file" name="profile-image">
+    </label>
+    
 
     <button type='submit' class='btn-form'>Sign Up</button>
     <div class='social'>
@@ -33,6 +39,7 @@
     </div>
   </form>
 </div>
+
 {{#if errorMessage}}
   <div class='alert'>
     <span

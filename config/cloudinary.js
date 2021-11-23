@@ -11,11 +11,11 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'movie-uploads',
+    folder: 'blogify-uploads',
     allowed_formats: 'jpg, png',
   },
 })
 
-const uploader = multer({ storage })
+ 
 
-module.exports = { uploader, cloudinary }
+module.exports =  multer({ storage }) 
