@@ -15,9 +15,10 @@ const isLoggedOut = require('../middleware/isLoggedOut')
 const isLoggedIn = require('../middleware/isLoggedIn')
 const Editor = require('../models/Editor')
 
-router.get('/signup', (req, res, next) => {
-  res.render('signUp')
-})
+
+router.get("/signup", isLoggedOut, (req, res, next) => {
+  res.render('signUp');
+});
 
 router.post('/signup', (req, res, next) => {
   const { username, password, bio, email } = req.body
@@ -82,11 +83,14 @@ router.post('/signup', (req, res, next) => {
 // 		})
 // });
 
-router.get('/login', (req, res, next) => {
+
+
+router.get('/login', isLoggedOut, (req, res, next) => {
+
   res.render('logIn')
 })
 
-router.post('/login', isLoggedOut, (req, res, next) => {
+router.post('/logIn', (req, res, next) => {
   const { username, password } = req.body
 
   if (!username) {
@@ -121,7 +125,7 @@ router.post('/login', isLoggedOut, (req, res, next) => {
         }
         req.session.user = user
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
-        return res.redirect('/profile')
+        return res.redirect('profile')
       })
     })
 

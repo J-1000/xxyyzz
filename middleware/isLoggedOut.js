@@ -3,6 +3,7 @@ module.exports = (req, res, next) => {
   // redirects the user to the profile page
   if (req.session.user) {
     return res.redirect('/profile')
+  } else {
+    next()
   }
-  next()
 }
