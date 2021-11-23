@@ -38,13 +38,13 @@ router.get('/profile/edit',isLoggedIn,(req, res, next) => {
 
 });
 
-router.post('/profile/edit', fileUploader.single('profile-image'),(req, res, next) => {
+router.post('/profile/edit',isLoggedIn, fileUploader.single('profile-image'),(req, res, next) => {
     const id = req.session.user._id;
     const {bio, email, password} = req.body;
 
-    const imageUrl = req.session.user.imageUrl;
-    const imgName = req.session.user.imgName;
-    const publicId = req.session.user.publicId;
+    let imageUrl = req.session.user.imageUrl;
+    let imgName = req.session.user.imgName;
+    let publicId = req.session.user.publicId;
 
     const salt = bcrypt.genSaltSync()
     const hash = bcrypt.hashSync(password, salt)
@@ -64,22 +64,21 @@ router.post('/profile/edit', fileUploader.single('profile-image'),(req, res, nex
         imgName = req.file.originalname;
         publicId = req.file.filename;
     }
-    console.log(req.file)
-    console.log(imageUrl, imgName, publicId)
+    
 
-    // Editor.findByIdAndUpdate(id, {
-    //     bio: bio,
-    //     email: email,
-    //     password: hash,
-    //     imageUrl: imageUrl,
-    //     imgName: imgName,
-    //     publicId: publicId
-    // },{
-    //     new:true
-    // })
-    //     .then(updatedEditor => {
-    //         res.redirect('/profile')
-    //     })
+    Editor.findByIdAndUpdate(id, {
+        bio: bio,
+        email: email,
+        password: hash,
+        imageUrl: imageUrl,
+        imgName: imgName,
+        publicId: publicId
+    },{
+        new:true
+    })
+        .then(updatedEditor => {
+            res.redirect('/profile')
+        })
 });
 
 
