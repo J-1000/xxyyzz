@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require('express').Router()
 const Editor = require('../models/Editor')
 const bcrypt = require('bcrypt')
 
@@ -8,8 +8,6 @@ const fileUploader = require('../config/cloudinary');
 
 
 router.get('/profile', isLoggedIn,(req,res,next) => {
-
-
     const id = req.session.user._id;
     
     Editor.findById(id)

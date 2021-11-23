@@ -396,26 +396,57 @@ input {
 }
 
 /* Showroom Page */
+.grid-container {
+  display: grid;
+  margin: 100px 150px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  text-align: center;
+}
+
+.blog-box p {
+  color: var(--light);
+}
+
+.blog-box a {
+  font-size: 16px;
+}
+
+/* Detail Page */
+.details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 900px;
+  margin: 50px auto;
+}
+
+.details-container p {
+  color: var(--light);
+}
+
+.details-container h3 {
+  margin: 80px 100px;
+}
+
+.details-author {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
 /* Create Blog Post Page */
 .create {
-  width: 1050px;
+  width: 850px;
   border-style: none;
-  margin: auto;
+  margin: 20px auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
-.editor-control {
-  width: 100%;
-  border: 2px solid #f1f1f1;
-}
-
-.ck-editor__editable {
-  height: 400px;
-}
 /* Edit Blog Post Page */
 
 /* Media Queries */
