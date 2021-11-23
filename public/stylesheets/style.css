@@ -48,7 +48,8 @@ h1 {
 }
 
 .btn-dark:hover,
-.btn-form:hover {
+.btn-form:hover,
+.btn-form-small:hover {
   color: var(--dark);
   background-color: var(--light);
   transition: 0.2s ease-in-out;
@@ -94,14 +95,23 @@ h1 {
 }
 
 .btn-form {
-  font-size: 18px;
+  font-size: 16px;
   color: var(--light);
-  background-color: var(--dark);
-  border: 2px solid #f1f1f1;
+  background-color: var(--red);
   border-radius: 5px;
   margin-top: 80px;
   width: 100%;
   padding: 15px 0;
+  cursor: pointer;
+}
+
+.btn-form-small {
+  font-size: 16px;
+  color: var(--light);
+  background-color: var(--red);
+  border-radius: 5px;
+  width: 60%;
+  padding: 15px;
   cursor: pointer;
 }
 
@@ -389,17 +399,22 @@ input {
 
 /* Create Blog Post Page */
 .create {
-  width: 50%;
+  width: 1050px;
   border-style: none;
-  margin: 50px auto;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .editor-control {
-  margin-top: 50px;
+  width: 100%;
+  border: 2px solid #f1f1f1;
 }
 
 .ck-editor__editable {
-  min-height: 400px;
+  height: 400px;
 }
 /* Edit Blog Post Page */
 

@@ -12,4 +12,8 @@ router.get('/create', isLoggedIn, (req, res, next) => {
   res.render('createBlogPost')
 })
 
-module.exports = router;
+router.get('/edit', (req, res, next) => {
+  res.render('editBlogPost')
+})
+
+module.exports = router

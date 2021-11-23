@@ -69,6 +69,12 @@ function init() {
 $('#year').text(new Date().getFullYear())
 
 // Create the Editor
-ClassicEditor.create(document.querySelector('#editor')).catch((error) => {
-  console.log(error)
-})
+DecoupledEditor.create(document.querySelector('#editor'))
+  .then((editor) => {
+    const toolbarContainer = document.querySelector('#toolbar-container')
+
+    toolbarContainer.appendChild(editor.ui.view.toolbar.element)
+  })
+  .catch((error) => {
+    console.error(error)
+  })
