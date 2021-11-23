@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Editor = require('../models/Editor')
 const isLoggedOut = require('../middleware/isLoggedOut')
 const isLoggedIn = require('../middleware/isLoggedIn')
+const fileUploader = require('../config/cloudinary');
 
 router.get('/profile', isLoggedIn, (req,res,next) => {
     const id = req.session.user._id;

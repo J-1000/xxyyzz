@@ -4,7 +4,8 @@ const editorSchema = new Schema ({
     username: String,
     password: String,
     bio: String,
-    email: String
+    email: String,
+    imageUrl: String
 },{
     timestamps: true
 });

@@ -11,7 +11,11 @@
   <div>
     <figure class='profile-card'>
       <div class='profile-image'>
-        <img src='https://source.unsplash.com/random/800x600' alt='#' />
+        {{#if imageUrl}}
+          <img src='{{imageUrl}}' alt='profile image' />
+        {{else}}
+          <img src="https://source.unsplash.com/random/800x600" alt="profile image">
+        {{/if}}
       </div>
       <figcaption>
 
@@ -21,6 +25,7 @@
         </p>
       </figcaption>
     </figure>
+    <a href="/profile/edit">Edit profile</a>
   </div>
 
   <div>
