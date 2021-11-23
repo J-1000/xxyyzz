@@ -2,7 +2,11 @@ const router = require('express').Router();
 const Editor = require('../models/Editor')
 
 router.get('/profile',(req,res,next) => {
-    
+    // Editor.findOne({username:'nguyenthong17'})
+    //     .then(foundUser => {
+    //         req.session.user = foundUser
+    //         console.log(req.session.user)
+    //     })
     
     const id = req.session.user._id;
     
