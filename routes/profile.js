@@ -1,13 +1,9 @@
 const router = require('express').Router();
 const Editor = require('../models/Editor')
+const isLoggedOut = require('../middleware/isLoggedOut')
+const isLoggedIn = require('../middleware/isLoggedIn')
 
-router.get('/profile',(req,res,next) => {
-    // Editor.findOne({username:'nguyenthong17'})
-    //     .then(foundUser => {
-    //         req.session.user = foundUser
-    //         console.log(req.session.user)
-    //     })
-    
+router.get('/profile', isLoggedIn, (req,res,next) => {
     const id = req.session.user._id;
     
     Editor.findById(id)
@@ -16,7 +12,7 @@ router.get('/profile',(req,res,next) => {
         })
 })
 
-router.get('/logout', (req, res, next) => {
+router.get('/logout', isLoggedIn, (req, res, next) => {
     req.session.destroy(err => {
         if (err) {
             next(err)
