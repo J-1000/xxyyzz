@@ -5,7 +5,9 @@ const editorSchema = new Schema ({
     password: String,
     bio: String,
     email: String,
-    imageUrl: String
+    imageUrl: String,
+    imgName: String,
+    publicId: String
 },{
     timestamps: true
 });

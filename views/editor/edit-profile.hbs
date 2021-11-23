@@ -11,17 +11,30 @@
     <form action='/profile/edit' method='POST'>
         <h3>Edit profle</h3>
 
+        <div class='profile-image'>
+          {{#if imageUrl}}
+            <img src='{{imageUrl}}' alt='profile image' />
+          {{else}}
+            <img src="https://source.unsplash.com/random/800x600" alt="profile image">
+          {{/if}}
+        </div>
+
         <label for='username'>Your username</label>
         <input type='text' id='username' name="username" value="{{username}}"readonly/>
 
-        <label for='bio'>Short bio</label>
+        <label for='bio'>Bio</label>
         <input type='text' id='bio' name="bio" value="{{bio}}"/>
 
         <label for='email'>Enter your email</label>
         <input type='text' id='email' name="email" value="{{email}}"/>
 
-        <label for='password'>Pick a password</label>
+        <label for='password'>Change password</label>
         <input type='password' id='password' name="password"/>
+
+        <label for="image">
+          Updte your profile photo
+          <input type="file" name="profile-image">
+        </label>
 
         <button type='submit' class='btn-form'>Save</button>
     </form>
