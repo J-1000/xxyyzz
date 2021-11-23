@@ -16,79 +16,57 @@ const isLoggedIn = require('../middleware/isLoggedIn')
 const Editor = require('../models/Editor')
 
 
-router.get("/signup", (req, res, next) => {
+router.get("/signup", isLoggedOut, (req, res, next) => {
   res.render('signUp');
 });
+
+router.get('/login', (req, res, next) => {
+  res.render('logIn')
+})
 
 router.post('/signup', (req, res, next) => {
   const { username, password, bio, email } = req.body
   if (password.length < 8) {
-    res.render('signUp', { errorMessage: 'Your password needs to be at least 8 characters long.' })
+    res.render('signUp', {
+      errorMessage: 'Your password needs to be at least 8 characters long.',
+    })
     return
   }
   if (username.length === 0) {
     res.render('signUp', { errorMessage: 'Your username cannot be empty.' })
     return
   }
-  Editor.findOne({ username: username })
-    .then(editorFromDB => {
-      if (editorFromDB !== null) {
-        res.render('signUp', ({ errorMessage: 'Your username is already taken' }))
-      } else {
-        const salt = bcrypt.genSaltSync()
-        const hash = bcrypt.hashSync(password, salt)
-        Editor.create({ username:username, password:hash, bio:bio, email:email })
-          .then(editorFromDB => {
-          req.session.user = editorFromDB;
+  Editor.findOne({ username: username }).then((editorFromDB) => {
+    if (editorFromDB !== null) {
+      res.render('signUp', { errorMessage: 'Your username is already taken' })
+    } else {
+      const salt = bcrypt.genSaltSync()
+      const hash = bcrypt.hashSync(password, salt)
+      Editor.create({
+        username: username,
+        password: hash,
+        bio: bio,
+        email: email,
+      })
+        .then((editorFromDB) => {
+          req.session.user = editorFromDB
           res.redirect('/profile')
-          })
-          .catch(err => next(err))
-      }
-    })
+        })
+        .catch((err) => next(err))
+    }
+  })
 })
 
 
 
-// router.post('/signup', (req, res, next) => {
-// 	const { username, password } = req.body
-// 	if (password.length < 8) {
-// 		res.render('signup', { errorMessage: 'Your password needs to be 8 chars min' })
-// 		return
-// 	}
-
-// 	if (username.length === 0) {
-// 		res.render('signup', { errorMessage: 'Your username cannot be empty' })
-// 		return
-// 	}
-
-// 	Editor.findOne({ username: username })
-// 		.then(editorFromDB => {
-// 			if (editorFromDB !== null) {
-// 				res.render('signup', { errorMessage: 'Your username is already taken' })
-// 			} else {
-
-// 				const salt = bcrypt.genSaltSync();
-// 				const hash = bcrypt.hashSync(password, salt)
-
-// 				Editor.create({ username: username, password: hash })
-// 					.then(createdEditor => {
-// 						res.redirect('/profile')
-// 					})
-// 					.catch(err => next(err))
-// 			}
-// 		})
-// });
 
 
 
-
-
-
-router.get('/login', (req, res, next) => {
+router.get('/login', isLoggedOut, (req, res, next) => {
   res.render('logIn')
 })
 
-router.post('/logIn', isLoggedOut, (req, res, next) => {
+  router.post('/login', isLoggedOut, (req, res, next) => {
   const { username, password } = req.body
 
   if (!username) {

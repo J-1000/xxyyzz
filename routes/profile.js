@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 
 
 router.get('/profile', isLoggedIn,(req,res,next) => {
+
     const id = req.session.user._id;
     
     Editor.findById(id)
@@ -13,7 +14,7 @@ router.get('/profile', isLoggedIn,(req,res,next) => {
         })
 })
 
-router.get('/logout', (req, res, next) => {
+router.get('/logout', isLoggedIn, (req, res, next) => {
     req.session.destroy(err => {
         if (err) {
             next(err)

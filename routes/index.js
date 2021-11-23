@@ -1,8 +1,19 @@
+
 const router = require("express").Router();
+const isLoggedOut = require('../middleware/isLoggedOut')
+const isLoggedIn = require('../middleware/isLoggedIn')
 
 /* GET home page */
-router.get("/", (req, res, next) => {
+router.get("/", isLoggedOut, (req, res, next) => {
   res.render("index");
 });
 
-module.exports = router;
+router.get('/create', isLoggedIn, (req, res, next) => {
+  res.render('createBlogPost')
+})
+
+router.get('/edit', (req, res, next) => {
+  res.render('editBlogPost')
+})
+
+module.exports = router
