@@ -68,13 +68,24 @@ function init() {
 // Get the current year for the copyright
 $('#year').text(new Date().getFullYear())
 
-// Create the Editor
-DecoupledEditor.create(document.querySelector('#editor'))
-  .then((editor) => {
-    const toolbarContainer = document.querySelector('#toolbar-container')
-
-    toolbarContainer.appendChild(editor.ui.view.toolbar.element)
-  })
-  .catch((error) => {
-    console.error(error)
-  })
+// Create the editor
+tinymce.init({
+  forced_root_block: false,
+  selector: '#mytextarea',
+  height: 500,
+  menubar: false,
+  plugins: [
+    'advlist autolink lists link image charmap print preview anchor',
+    'searchreplace visualblocks code fullscreen',
+    'insertdatetime media table paste code help wordcount',
+    'pageembed code preview',
+  ],
+  toolbar:
+    'undo redo | formatselect | ' +
+    'bold italic backcolor | alignleft aligncenter ' +
+    'alignright alignjustify | bullist numlist outdent indent | ' +
+    'removeformat | help' +
+    'pageembed code preview',
+  content_style:
+    'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+})
