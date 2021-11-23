@@ -33,3 +33,13 @@
     </div>
   </form>
 </div>
+
+{{#if errorMessage}}
+  <div class='alert'>
+    <span
+      class='closebtn'
+      onclick="this.parentElement.style.display='none';"
+    >&times;</span>
+    {{errorMessage}}
+  </div>
+{{/if}}
