@@ -1,0 +1,28 @@
+<nav class='nav'>
+  <div class='nav-container'>
+    <h1>Blogify</h1>
+    <ul>
+      <li><a href='/logout' class='btn-logout'>Log Out</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class='container-form'>
+    <form action='/profile/edit' method='POST'>
+        <h3>Edit profle</h3>
+
+        <label for='username'>Your username</label>
+        <input type='text' id='username' name="username" value="{{username}}"readonly/>
+
+        <label for='bio'>Short bio</label>
+        <input type='text' id='bio' name="bio" value="{{bio}}"/>
+
+        <label for='email'>Enter your email</label>
+        <input type='text' id='email' name="email" value="{{email}}"/>
+
+        <label for='password'>Pick a password</label>
+        <input type='password' id='password' name="password"/>
+
+        <button type='submit' class='btn-form'>Save</button>
+    </form>
+</div>
