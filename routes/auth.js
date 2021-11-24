@@ -15,13 +15,19 @@ const isLoggedOut = require('../middleware/isLoggedOut')
 const isLoggedIn = require('../middleware/isLoggedIn')
 const Editor = require('../models/Editor')
 
-const fileUploader = require('../config/cloudinary');
+const {fileUploader, cloudinary} = require('../config/cloudinary');
+
+
 router.get("/signup", isLoggedOut, (req, res, next) => {
   res.render('signUp');
 });
 
 router.post('/signup', fileUploader.single('profile-image'),(req, res, next) => {
   const { username, password, bio, email } = req.body
+
+  const imageUrl = req.file.path
+  const imgName = req.file.originalname
+  const publicId = req.file.filename
   if (password.length < 8) {
     res.render('signUp', {
       errorMessage: 'Your password needs to be at least 8 characters long.',
@@ -44,7 +50,9 @@ router.post('/signup', fileUploader.single('profile-image'),(req, res, next) => 
         password: hash,
         bio: bio,
         email: email,
-        imageUrl: req.file.path
+        imageUrl: imageUrl,
+        imgName: imgName,
+        publicId: publicId
       })
         .then((editorFromDB) => {
           req.session.user = editorFromDB

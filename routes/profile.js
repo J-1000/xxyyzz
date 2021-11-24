@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 
 const isLoggedOut = require('../middleware/isLoggedOut')
 const isLoggedIn = require('../middleware/isLoggedIn')
-const fileUploader = require('../config/cloudinary');
+const {fileUploader, cloudinary} = require('../config/cloudinary');
 
 
 router.get('/profile', isLoggedIn,(req,res,next) => {
@@ -36,9 +36,13 @@ router.get('/profile/edit',isLoggedIn,(req, res, next) => {
 
 });
 
-router.post('/profile/edit',(req, res, next) => {
+router.post('/profile/edit',isLoggedIn, fileUploader.single('profile-image'),(req, res, next) => {
     const id = req.session.user._id;
     const {bio, email, password} = req.body;
+
+    let imageUrl = req.session.user.imageUrl;
+    let imgName = req.session.user.imgName;
+    let publicId = req.session.user.publicId;
 
     const salt = bcrypt.genSaltSync()
     const hash = bcrypt.hashSync(password, salt)
@@ -53,10 +57,20 @@ router.post('/profile/edit',(req, res, next) => {
         return
     }
     
+    if (req.file){
+        imageUrl = req.file.path;
+        imgName = req.file.originalname;
+        publicId = req.file.filename;
+    }
+    
+
     Editor.findByIdAndUpdate(id, {
         bio: bio,
         email: email,
-        password: hash
+        password: hash,
+        imageUrl: imageUrl,
+        imgName: imgName,
+        publicId: publicId
     },{
         new:true
     })
