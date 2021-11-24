@@ -1,0 +1,31 @@
+<div>
+  {{#with post}}
+    <div class='details-container'>
+      <div>
+        <h1>{{title}}</h1>
+      </div>
+
+      <div>
+        <p>{{{content}}}</p>
+      </div>
+
+      <div class='details-author'>
+        {{#with editorId}}
+          <div>
+            <h3>
+              Written by:
+              {{username}}
+            </h3>
+          </div>
+        {{/with}}
+
+        <div>
+          <a class='btn-dark' href='/edit/{{_id}}'>Edit Post</a>
+          <a class='btn-logout' href='/details/delete/{{_id}}'>Delete Post</a>
+        </div>
+
+      </div>
+      <a class='btn-red' href='/view'><span>View Blog Page</span></a>
+    </div>
+  {{/with}}
+</div>

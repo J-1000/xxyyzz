@@ -1,31 +1,33 @@
-<nav class='nav'>
-  <div class='nav-container'>
-    <h1>Blogify</h1>
-    <ul>
-      <li><a href='#' class='btn-logout'>Log Out</a></li>
-    </ul>
-  </div>
-</nav>
+<div>
+  {{#with post}}
+    <nav class='nav'>
+      <div class='nav-container'>
+        <h1>Blogify</h1>
+        <ul>
+          <li><a href='#' class='btn-logout'>Log Out</a></li>
+        </ul>
+      </div>
+    </nav>
 
-<form class='create' action='/' method='post'>
-  <input
-    type='text'
-    id='title'
-    name='title'
-    placeholder='Enter a title here'
-    value='{{name}}'
-  />
-  <div id='toolbar-container'></div>
+    <form class='create' action='/edit/{{_id}}' method='post'>
+      <input
+        type='text'
+        id='title'
+        name='title'
+        placeholder='Enter a title here'
+        value='{{title}}'
+      />
+      <div>
+        <textarea id='mytextarea' name='content'>{{{content}}}</textarea>
+      </div>
 
-  <div class='editor-control'>
-    <div id='editor'></div>
-  </div>
+      <button class='btn-form-small'>Update Post</button>
+    </form>
 
-  <button class='btn-form-small'>Edit Post</button>
-</form>
-
-<footer id='main-footer' class='text-center p-4'>
-  <div class='footer-content'>
-    <p>&copy; <span id='year'></span> Blogify</p>
-  </div>
-</footer>
+    <footer id='main-footer' class='text-center p-4'>
+      <div class='footer-content'>
+        <p>&copy; <span id='year'></span> Blogify</p>
+      </div>
+    </footer>
+  {{/with}}
+</div>

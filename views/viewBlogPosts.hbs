@@ -7,14 +7,17 @@
   </div>
 </nav>
 
-<form class='create' action='/create' method='POST'>
-  <input type='text' id='title' name='title' placeholder='Enter a title here' />
-  <div>
-    <textarea id='mytextarea' name='content'></textarea>
-  </div>
-
-  <button type='submit' class='btn-form-small'>Create Post</button>
-</form>
+<div class='grid-container'>
+  {{#each post}}
+    <div class='blog-box'>
+      {{#with editorId}}
+        <h3>Written by: {{username}}</h3>
+      {{/with}}
+      <p>{{title}}</p>
+      <a class='btn-logout' href='/details/{{_id}}'><span>Read More</span></a>
+    </div>
+  {{/each}}
+</div>
 
 <footer id='main-footer' class='text-center p-4'>
   <div class='footer-content'>
