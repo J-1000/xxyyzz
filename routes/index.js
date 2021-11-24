@@ -24,7 +24,7 @@ router.get('/edit/:id', (req, res, next) => {
 
   Post.findById(id)
     .then((postFromDB) => {
-      res.render('editBlogPost', { post: postFromDB })
+      res.render('editBlogPost', { post: postFromDB} )
     })
     .catch((err) => next(err))
 })
@@ -41,12 +41,20 @@ router.post('/edit/:id', (req, res, next) => {
     .catch((err) => next(err))
 })
 
-router.get('/details/:id', isLoggedIn, (req, res, next) => {
+//detail route
+router.get('/details/:id', (req, res, next) => {
+  let visible = 'hidden'
+  
+  if (req.session.user){
+    visible = 'visible'
+  }
+
   Post.findById(req.params.id)
     .populate('editorId')
     .then((postFromDb) => {
-      // console.log(postFromDb)
-      res.render('details', { post: postFromDb })
+      console.log(postFromDb)
+      // console.log({...postFromDb, visible: visible})
+      res.render('details', {post:postFromDb, visible: visible})
     })
     .catch((err) => next(err))
 })
@@ -66,16 +74,6 @@ router.post('/create', (req, res, next) => {
     .then((createdPost) => {
       console.log(createdPost)
       res.redirect(`/details/${createdPost._id}`)
-    })
-    .catch((err) => next(err))
-})
-
-router.get('/details/:id', isLoggedIn, (req, res, next) => {
-  Post.findById(req.params.id)
-    .populate('editorId')
-    .then((postFromDb) => {
-      console.log(postFromDb)
-      res.render('details', { post: postFromDb })
     })
     .catch((err) => next(err))
 })

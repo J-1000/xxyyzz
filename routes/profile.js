@@ -58,9 +58,13 @@ router.post('/profile/edit',isLoggedIn, fileUploader.single('profile-image'),(re
     }
     
     if (req.file){
+        if (req.session.user.publicId){
+            cloudinary.uploader.destroy(req.session.user.publicId)       
+        }
+
         imageUrl = req.file.path;
         imgName = req.file.originalname;
-        publicId = req.file.filename;
+        publicId = req.file.filename;        
     }
     
 
@@ -75,6 +79,7 @@ router.post('/profile/edit',isLoggedIn, fileUploader.single('profile-image'),(re
         new:true
     })
         .then(updatedEditor => {
+            req.session.user = updatedEditor
             res.redirect('/profile')
         })
 });
