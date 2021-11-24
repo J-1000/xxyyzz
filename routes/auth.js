@@ -16,6 +16,16 @@ const isLoggedIn = require('../middleware/isLoggedIn')
 const Editor = require('../models/Editor')
 
 const {fileUploader, cloudinary} = require('../config/cloudinary');
+const GitHubStrategy = require("passport-github2").Strategy
+const passport = require('passport')
+
+// Git 
+router.get('/github', passport.authenticate('github'));
+
+router.get('/auth/github/callback', passport.authenticate('github', {
+	successRedirect: '/profile',
+	failureRedirect: '/login'
+}))
 
 
 router.get("/signup", isLoggedOut, (req, res, next) => {

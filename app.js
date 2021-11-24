@@ -24,6 +24,45 @@ const capitalized = (string) =>
 
 app.locals.title = `${capitalized(projectName)} created with IronLauncher`
 
+const GitHubStrategy = require("passport-github2").Strategy
+const passport = require("passport")
+const Editor = require('./models/Editor')
+
+
+passport.use(new GitHubStrategy({
+	clientID: process.env.GITHUB_CLIENT_ID,
+	clientSecret: process.env.GITHUB_CLIENT_SECRET,
+	callbackURL: "http://127.0.0.1:3000/auth/github/callback"
+},
+	(accessToken, refreshToken, profile, done) => {
+	console.log(profile)
+		Editor.findOne({ 
+      githubId: profile.id,
+      // username: profil.name,
+      // email   : profil.email,
+      // bio     : profil.bio
+    })
+    
+			.then(editorFromDB => {
+				if (editorFromDB !== null) {
+					done(null, editorFromDB)
+				} else { 
+					Editor.create({
+            githubId: profil.id,
+            // username: profil.name,
+            // email   : profil.email,
+            // bio     : profil.bio
+					})
+						.then(createdUser => {
+							done(null, createdUser)
+						})
+				}
+			})
+			.catch(err => done(err))
+	}
+));
+
+
 // 👇 Start handling routes here
 const index = require('./routes/index')
 app.use('/', index)
