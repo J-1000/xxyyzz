@@ -1,0 +1,34 @@
+<nav class='nav'>
+  <div class='nav-container'>
+    <h1>Blogify</h1>
+    <ul>
+      
+      <a href="/signUp"><button  type='submit' class='btn-form'>Sign Up</button></a>
+    </ul>
+  </div>
+</nav>
+
+
+
+<div class='title'>
+      <h3>View a Random Blogify Post</h3>
+      <a class='btn-dark' href='/guest/guestView'>Click for another Post</a>
+    </div>
+  </div>
+
+
+
+
+{{#with post}}
+<h3>{{title}}</h3>
+<h3>{{content}}</h3>
+{{/with}}
+
+
+
+
+<footer id='main-footer' class='text-center p-4'>
+  <div class='footer-content'>
+    <p>&copy; <span id='year'></span> Blogify</p>
+  </div>
+</footer>
