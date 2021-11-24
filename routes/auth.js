@@ -25,9 +25,16 @@ router.get("/signup", isLoggedOut, (req, res, next) => {
 router.post('/signup', fileUploader.single('profile-image'),(req, res, next) => {
   const { username, password, bio, email } = req.body
 
-  const imageUrl = req.file.path
-  const imgName = req.file.originalname
-  const publicId = req.file.filename
+  let imageUrl = ''
+  let imgName = ''
+  let publicId = ''
+
+  if (req.file) {
+    imageUrl = req.file.path
+    imgName = req.file.originalname
+    publicId = req.file.filename
+  }
+
   if (password.length < 8) {
     res.render('signUp', {
       errorMessage: 'Your password needs to be at least 8 characters long.',
