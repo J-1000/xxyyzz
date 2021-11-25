@@ -18,16 +18,41 @@ const app = express()
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require('./config')(app)
 
+const Editor = require('./models/Editor.js')
+
 const projectName = 'blogify'
 const capitalized = (string) =>
-  string[0].toUpperCase() + string.slice(1).toLowerCase()
+	string[0].toUpperCase() + string.slice(1).toLowerCase()
 
 app.locals.title = `${capitalized(projectName)} created with IronLauncher`
 
-const GitHubStrategy = require("passport-github2").Strategy
-const passport = require("passport")
-const Editor = require('./models/Editor')
 
+
+const bcrypt = require('bcrypt');
+
+const passport = require("passport")
+passport.serializeUser((user, done) => {
+	done(null, user._id);
+});
+
+passport.deserializeUser((id, done) => {
+	Editor.findById(id)
+		.then(userFromDB => {
+			done(null, userFromDB);
+		})
+		.catch(err => {
+			done(err);
+		})
+})
+
+
+
+
+const GitHubStrategy = require("passport-github").Strategy
+
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 passport.use(new GitHubStrategy({
 	clientID: process.env.GITHUB_CLIENT_ID,
@@ -35,23 +60,23 @@ passport.use(new GitHubStrategy({
 	callbackURL: "http://127.0.0.1:3000/auth/github/callback"
 },
 	(accessToken, refreshToken, profile, done) => {
-	console.log(profile)
-		Editor.findOne({ 
-      githubId: profile.id,
-      // username: profil.name,
-      // email   : profil.email,
-      // bio     : profil.bio
-    })
-    
+		console.log(profile)
+		Editor.findOne({
+			githubId: profile.id,
+			// username: profil.name,
+			// email   : profil.email,
+			// bio     : profil.bio
+		})
+
 			.then(editorFromDB => {
 				if (editorFromDB !== null) {
 					done(null, editorFromDB)
-				} else { 
+				} else {
 					Editor.create({
-            githubId: profil.id,
-            // username: profil.name,
-            // email   : profil.email,
-            // bio     : profil.bio
+						githubId: profile.id,
+						// username: profil.name,
+						// email   : profil.email,
+						// bio     : profil.bio
 					})
 						.then(createdUser => {
 							done(null, createdUser)
@@ -61,6 +86,8 @@ passport.use(new GitHubStrategy({
 			.catch(err => done(err))
 	}
 ));
+
+
 
 
 // 👇 Start handling routes here
